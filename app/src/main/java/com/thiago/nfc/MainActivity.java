@@ -4,24 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.Ndef;
-import android.nfc.tech.NfcA;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity {
     private TextView nfcAntennaInfo;
@@ -73,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         NfcAdapter.ReaderCallback callback = new NfcAdapter.ReaderCallback() {
             public void onTagDiscovered(Tag tag) {
-                System.out.println(tag.toString());
+                System.out.println(tag);
             }
         };
 
@@ -91,16 +80,5 @@ public class MainActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         nfcAdapter.disableReaderMode(this);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent){
-        super.onNewIntent(intent);
-        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        getTagInfo(tag, intent);
-    }
-
-    private void getTagInfo(Tag tag, Intent intent) {
-        Ndef ndef = Ndef.get(tag);
     }
 }
